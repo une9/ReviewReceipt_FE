@@ -7,7 +7,6 @@ const Header = () => {
     const path = loc.pathname;
     console.log(path)
     const [title, setTitle] = useState("");
-    
 
     useEffect(() => {
         if (path === "/") {
@@ -18,6 +17,7 @@ const Header = () => {
             setTitle("");
         }
     }, [path])
+
     return (
         <ResponsiveHeader>
             <PageTitle>

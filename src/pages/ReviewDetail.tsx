@@ -34,7 +34,7 @@ const ReviewDetail = () => {
                 review
                 &&
                 <div>
-                    <div>{review['is_public'] ? "공개" : "비공개"}</div>
+                    {/* <div>{review['is_public'] ? "공개" : "비공개"}</div> */}
                     <ReviewReceipt {...review} />
                 </div>
             }

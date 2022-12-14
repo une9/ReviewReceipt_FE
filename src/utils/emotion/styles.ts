@@ -51,12 +51,13 @@ export const ResponsiveNav = {
         font-family: 'Abril Fatface', cursive;
         font-size: 2rem;
         margin: 1.25rem 0;
-
-        a {
-            text-decoration: none;
-            color: black;
-        }
     `,
+    A: styled.a<{isHere:boolean}>`
+        text-decoration: none;
+        color: ${props => props.isHere ? "transparent" : "black"};
+        -webkit-text-stroke: ${props => props.isHere ? "1px black" : "none"};
+        // text-shadow: ${props => props.isHere ? "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;" : "none"};
+    `
 }
 
 // Review List Item
@@ -80,7 +81,8 @@ export const ReviewListItem = {
         padding: 1.5rem 1rem;
     `,
     Date: styled.time`
-        margin-bottom: 0.5rem;
+        display: inline-block;
+        margin-bottom: 0.25rem;
         font-size: 0.875rem;
         color: ${COLOR.FONT.SUB_LIGHTER};
     `,
