@@ -2,7 +2,7 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReviewReceipt from "../components/ReviewReceipt";
-import { Page, ReviewDetailInner } from "../utils/emotion/styles";
+import { Page, PageTitle, ReviewDetailInner } from "../utils/emotion/styles";
 import { ReviewExtend } from "../utils/types/ReviewType";
 
 const ReviewDetail = () => {
@@ -29,6 +29,10 @@ const ReviewDetail = () => {
 
     return (
         <Page>
+            <PageTitle>
+               Review
+            </PageTitle>
+
             <ReviewDetailInner>
             {
                 review

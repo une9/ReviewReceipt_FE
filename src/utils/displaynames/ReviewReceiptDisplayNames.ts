@@ -13,3 +13,12 @@ export const publlishDateDisplayName : { [key: string]: string } = {
     "BOOK": "출판일",
     "SHOW": "공연일",
 }
+
+export const GenreDisplayName : { [key: string]: string } = {
+    "MOV": "MOVIE",
+    "DRM": "DRAMA",
+    "MSC": "MUSIC",
+    "BOOK": "BOOK",
+    "SHOW": "SHOW",
+}
+

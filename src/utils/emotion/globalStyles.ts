@@ -2,12 +2,7 @@ import { css } from "@emotion/react";
 
 export const fonts = css`
     {/* Abril Fatface */}
-    @font-face {
-        font-family: 'AF';
-        src: url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
-        font-weight: normal;
-        font-style: normal;
-    }
+    // index.html link
 
     {/* NeoDunggeunmo */}
     @font-face {
@@ -25,13 +20,17 @@ export const fonts = css`
         font-style: normal;
     }
 
-    * {
-        font-family: "ND", "P", serif;
+    {/* twaysky */}
+    @font-face {
+        font-family: 'TS';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twaysky.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
     }
-
 `
 
 export const globalStyles = css`
+
     * {
         box-sizing: border-box;
     }

@@ -1,15 +1,12 @@
-import { ReviewReceiptDetail as ReviewReceiptDetailStyle, 
-        ReviewReceiptDetailRow as Row,
-        SepLine as SepLineStyle,
-        ReviewReceiptDetailReviewText as DetailReviewText } from "../utils/emotion/styles"
+import { ReviewReceipt as ReRe } from "../utils/emotion/styles"
 import { scoreformatter } from "../utils/formatters/scoreformatter";
 import { ReviewDetail } from "../utils/types/ReviewType";
 
 const SepLine = (sep: string) => {
     return (
-        <SepLineStyle>
+        <ReRe.SepLine>
             { new Array(50).fill(sep).join("") }
-        </SepLineStyle>
+        </ReRe.SepLine>
     )
 }
 
@@ -19,7 +16,7 @@ const SepLineDetailText = () => SepLine(" * ");
 const DetailScoreSection = (props: ReviewDetail) => {
     return (
         <ul>
-            <Row>
+            <ReRe.Detail.Row>
                 <SepLineList />
                 <div className="row-score">
                     <div className="left">부문</div>
@@ -29,7 +26,7 @@ const DetailScoreSection = (props: ReviewDetail) => {
                     </div>
                 </div>
                 <SepLineList />
-            </Row>
+            </ReRe.Detail.Row>
             <div className="rows">
                 {
                     new Array(5).fill(true).map((_, i: number) => {
@@ -41,7 +38,7 @@ const DetailScoreSection = (props: ReviewDetail) => {
                         const desc = props[`list_${i+1}_desc` as keyof ReviewDetail];
 
                         return (
-                            <Row key={`row-${i}-${title}`}>
+                            <ReRe.Detail.Row key={`row-${i}-${title}`}>
                                 <div className="row-score">
                                     <div className="left">{title as string}</div>
                                     <div className="right">
@@ -55,22 +52,42 @@ const DetailScoreSection = (props: ReviewDetail) => {
                                         {desc as string}
                                     </div>
                                 }
-                            </Row>
+                            </ReRe.Detail.Row>
                         )
                     })
                 }
             </div>
-            <Row>
+            <ReRe.Detail.Row>
                 <SepLineList />
                 <div className="row-score">
                     <div className="left">총점</div>
                     <div className="right">
-                        <div>100.0</div>
-                        <div>85.0</div>
+                        <div>
+                            {
+                                scoreformatter(
+                                    props.list_1_score_total
+                                    + props.list_2_score_total
+                                    + props.list_3_score_total
+                                    + props.list_4_score_total
+                                    + props.list_5_score_total
+                                )
+                            }
+                        </div>
+                        <div>
+                            {
+                                scoreformatter(
+                                    props.list_1_score
+                                    + props.list_2_score
+                                    + props.list_3_score
+                                    + props.list_4_score
+                                    + props.list_5_score
+                                )
+                            }
+                        </div>
                     </div>
                 </div>
                 <SepLineList />
-            </Row>
+            </ReRe.Detail.Row>
         </ul>
     )
 }
@@ -79,13 +96,13 @@ const DetailReviewSection = (props: {
     detailText : string
 } ) => {
     return (
-        <DetailReviewText>
+        <ReRe.Detail.ReviewText>
             <SepLineDetailText />
             <p>
                 {props.detailText}
             </p>
             <SepLineDetailText />
-        </DetailReviewText>
+        </ReRe.Detail.ReviewText>
     )
 }
 
@@ -94,7 +111,7 @@ const ReviewReceiptDetail = (
 ) => {
 
     return (
-        <ReviewReceiptDetailStyle>
+        <ReRe.Detail.Section>
             {
                 (props.list_1_title && props.list_1_score_total && props.list_1_score)
                 &&
@@ -105,7 +122,7 @@ const ReviewReceiptDetail = (
                 &&
                 <DetailReviewSection detailText={props.detail_review_text} />
             }
-        </ReviewReceiptDetailStyle>
+        </ReRe.Detail.Section>
     )
 }
 

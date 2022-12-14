@@ -1,8 +1,9 @@
 import { getYearFormatter, ReviewDateFormatter, ReviewTimeFormatter } from "../utils/formatters/timeformatter";
 import { ReviewDetail, ReviewExtend } from "../utils/types/ReviewType";
-import { ReviewReceipt as ReviewReceiptComp } from "../utils/emotion/styles";
+import { ReviewReceipt as ReRe } from "../utils/emotion/styles";
 import ReviewReceiptDetailComp from "./ReviewReceiptDetail";
-import { playerDisplayName, publlishDateDisplayName } from "../utils/displaynames/ReviewReceiptDisplayNames";
+import { GenreDisplayName, playerDisplayName, publlishDateDisplayName } from "../utils/displaynames/ReviewReceiptDisplayNames";
+import ReviewReceiptBarcode from "./ReviewReceiptBarcode";
 
 const ReviewReceipt = ({
     review_id,
@@ -73,11 +74,13 @@ const ReviewReceipt = ({
     }
 
     const publishYear = getYearFormatter(publish_date);
-    
 
     return (
-        <ReviewReceiptComp>
-            <div>[ 영수증 ]</div>
+        <ReRe.Receipt.Body>
+            <ReRe.Receipt.Head>
+                [ 리뷰 영수증 ]
+            </ReRe.Receipt.Head>
+
             <h1>
                 {
                     (review_title && publishYear)
@@ -87,38 +90,51 @@ const ReviewReceipt = ({
                     review_title && review_title
                 }
             </h1>
-            <p>
-                {
-                    review_type === 'SHOW'
-                    ?
-                    `/ ${review_type} (${show_type}) /`
-                    :
-                    `/ ${review_type} /`
-                }
-            </p>
-            <p>{`관람: ${ReviewDateFormatter(do_date)}`}</p>
-            <p>{`${playerDisplayName[review_type]}: ${player}`}</p>
-            <p>{abstract_txt && `한줄요약: ${abstract_txt}`}</p>
-            <p>
-                {director && `감독: ${director}`}
-            </p>
-            <p>
-                {publisher && `출판사: ${publisher}`}
-            </p>
-            <p>
-                {place && `장소: ${place}`}
-            </p>
-            <p>
-                {publish_date && `${publlishDateDisplayName[review_type]}: ${ReviewDateFormatter(publish_date)}`}
-            </p>
-            {
-                <ReviewReceiptDetailComp {...ReviewDetailProps} />
-            }
-            <div>
-                <p>{`작성: ${ReviewTimeFormatter(create_date)}` }</p>
-                <p>{`수정: ${ReviewTimeFormatter(modify_date)}` }</p>
-            </div>
-        </ReviewReceiptComp>
+
+            <section>
+                <ReRe.Receipt.Row>
+                    {
+                        review_type === 'SHOW'
+                        ?
+                        `/ ${GenreDisplayName[review_type]} (${show_type}) /`
+                        :
+                        `/ ${GenreDisplayName[review_type]} /`
+                    }
+                </ReRe.Receipt.Row>
+                <ReRe.Receipt.Row>
+                    {`관람일: ${ReviewDateFormatter(do_date)}`}
+                </ReRe.Receipt.Row>
+                <ReRe.Receipt.Row>
+                    {abstract_txt && `한줄요약: ${abstract_txt}`}
+                </ReRe.Receipt.Row>
+                <ReRe.Receipt.Row>
+                    {`${playerDisplayName[review_type]}: ${player}`}
+                </ReRe.Receipt.Row>
+                <ReRe.Receipt.Row>
+                    {director && `감독: ${director}`}
+                </ReRe.Receipt.Row>
+                <ReRe.Receipt.Row>
+                    {publisher && `출판사: ${publisher}`}
+                </ReRe.Receipt.Row>
+                <ReRe.Receipt.Row>
+                    {place && `장소: ${place}`}
+                </ReRe.Receipt.Row>
+                <ReRe.Receipt.Row>
+                    {publish_date && `${publlishDateDisplayName[review_type]}: ${ReviewDateFormatter(publish_date)}`}
+                </ReRe.Receipt.Row>
+            </section>
+
+            <ReviewReceiptDetailComp {...ReviewDetailProps} />
+            <ReviewReceiptBarcode />
+
+            <ReRe.Receipt.Footer.Body>
+                <div>
+                    <ReRe.Receipt.Footer.Row>{`작성: ${ReviewTimeFormatter(create_date)}` }</ReRe.Receipt.Footer.Row>
+                    <ReRe.Receipt.Footer.Row>{`수정: ${ReviewTimeFormatter(modify_date)}` }</ReRe.Receipt.Footer.Row>
+                </div>
+            </ReRe.Receipt.Footer.Body>
+
+        </ReRe.Receipt.Body>
     )
 }
 

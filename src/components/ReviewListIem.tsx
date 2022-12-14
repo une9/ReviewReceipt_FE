@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { ReviewDateFormatter } from "../utils/formatters/timeformatter";
+import { getYearFormatter, ReviewShortDateFormatter } from "../utils/formatters/timeformatter";
 import { Review } from "../utils/types/ReviewType";
+import { ReviewListItem as ReLiItem } from "../utils/emotion/styles";
 
 interface ReviewListIemProps {
     review: Review
@@ -17,7 +18,7 @@ const ReviewListItem = ({
         do_date,
         favorite_line,
         player,
-        publish_year,
+        publish_date,
         publisher,
         place,
         show_type
@@ -30,15 +31,21 @@ const ReviewListItem = ({
         navigate(`/review/${rvid}`);
     }
 
+    const publishYear = getYearFormatter(publish_date);
+
 
     return (
-        <article onClick={(event) => moveToReviewDetail(review_id, event)}>
-            <div>{ReviewDateFormatter(do_date)}</div>
-            <h2>
-                {review_title} ({publish_year})
-            </h2>
-            <p>{abstract_txt}</p>
-        </article>
+        <ReLiItem.Body onClick={(event: React.MouseEvent<HTMLElement>) => moveToReviewDetail(review_id, event)}>
+            <ReLiItem.Date>
+                {ReviewShortDateFormatter(do_date)}
+            </ReLiItem.Date>
+            <ReLiItem.Title>
+                {review_title} ({publishYear})
+            </ReLiItem.Title>
+            <ReLiItem.Abstract>
+                {abstract_txt}
+            </ReLiItem.Abstract>
+        </ReLiItem.Body>
     )
 
 }
