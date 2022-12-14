@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import axios from 'axios';
 import ReviewListItem from "../components/ReviewListIem";
 import { Review } from "../utils/types/ReviewType";
-import { Page, PageTitle } from "../utils/emotion/styles";
+import { Page, ReviewListSection } from "../utils/emotion/styles";
 
 const Home = () => {
     const [reviews, setReviews] = useState<Review[]>([]);
@@ -27,17 +27,13 @@ const Home = () => {
 
     return (
         <Page>
-            <PageTitle>
-               Reviews
-            </PageTitle>
-
-            <section>
+            <ReviewListSection>
                 {
                     reviews.map((review, i) => (
                         <ReviewListItem review={review} key={i} />
                     ))
                 }
-            </section>
+            </ReviewListSection>
         </Page>
     )
 }

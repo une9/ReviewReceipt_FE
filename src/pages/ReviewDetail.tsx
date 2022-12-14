@@ -29,10 +29,6 @@ const ReviewDetail = () => {
 
     return (
         <Page>
-            <PageTitle>
-               Review
-            </PageTitle>
-
             <ReviewDetailInner>
             {
                 review

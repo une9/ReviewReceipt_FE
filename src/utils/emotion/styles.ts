@@ -5,6 +5,8 @@ import { COLOR } from './variables'
 export const Page = styled.div`
     max-width: 1200px;
     margin: 0 auto;
+    margin-top: 8rem;
+    margin-bottom: 8rem;
 
     @media(min-width: 576px) {
         
@@ -20,12 +22,50 @@ export const Page = styled.div`
 
 `
 
+export const ResponsiveHeader = styled.header`
+    position: fixed;
+    left: 0;
+    top: 0;
+`
+
 export const PageTitle = styled.h1`
     font-family: 'Abril Fatface', cursive;
     font-size: 4rem;
+    margin: 1rem 0;
+    // cursor: pointer;
 `
 
+export const ResponsiveNav = {
+    Body: styled.nav`
+        position: fixed;
+        right: 0;
+        top: 10rem;
+
+        margin: 2rem;
+    `,
+    Hamburger: styled.i`
+    `,
+    Li: styled.li`
+        list-style: none;
+
+        font-family: 'Abril Fatface', cursive;
+        font-size: 2rem;
+        margin: 1.25rem 0;
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+    `,
+}
+
 // Review List Item
+export const ReviewListSection = styled.section`
+    padding: 0 1rem;
+    margin: 0 auto;
+    max-width: 50rem;
+`
+
 export const ReviewListItem = {
     Body: styled.article`
         &:nth-of-type(1) {
@@ -39,7 +79,7 @@ export const ReviewListItem = {
         border-bottom: 1px solid ${COLOR.BORDER.LISTITEM};
         padding: 1.5rem 1rem;
     `,
-    Date: styled.div`
+    Date: styled.time`
         margin-bottom: 0.5rem;
         font-size: 0.875rem;
         color: ${COLOR.FONT.SUB_LIGHTER};
