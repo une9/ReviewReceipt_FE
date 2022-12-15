@@ -9,11 +9,12 @@ const moveLeftMixin = css`
 
 // 페이지 최상단 div (반응형)
 export const PageWrapper = styled.main<{isOpen:boolean}>`
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
 
     width: 100%;
+    // min-height: 100rem;
 
     // ${moveLeftMixin};
 
@@ -48,11 +49,9 @@ export const Page = styled.div`
 `
 
 export const ResponsiveHeader = styled.header`
-    ${isNarrowScreen} {
-        position: fixed;
-        left: 0;
-        top: 0;
-    }
+    position: fixed;
+    left: 0;
+    top: 0;
 `
 
 export const PageTitle = styled.h1<{isOpen:boolean}>`
@@ -111,7 +110,7 @@ export const ResponsiveNav = {
     `,
     ToggleUl: styled.ul`
         width: ${TOGGLENAV.WIDTH};
-        height: 100vh;
+        // height: 100vh;
         margin: 0;
         padding: 0;
         padding-top: 10rem;
