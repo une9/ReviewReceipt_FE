@@ -1,30 +1,35 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useLocation } from "react-router-dom";
-import { PageTitle, ResponsiveHeader } from "../utils/emotion/styles";
+import { NavContext } from "../contexts/NavContext";
+import { PageTitle, ResponsiveHeader } from "../emotion/styles";
 
 const Header = () => {
-    const loc = useLocation();
-    const path = loc.pathname;
-    console.log(path)
-    const [title, setTitle] = useState("");
+  const loc = useLocation();
+  const path = loc.pathname;
+  console.log(path);
+  const [title, setTitle] = useState("");
 
-    useEffect(() => {
-        if (path === "/") {
-            setTitle("Reviews");
-        } else if (path.startsWith("/review/")) {
-            setTitle("Review")
-        } else {
-            setTitle("");
-        }
-    }, [path])
+  const { isOpen } = useContext(NavContext);
 
-    return (
-        <ResponsiveHeader>
-            <PageTitle>
-               {title}
-            </PageTitle>
-        </ResponsiveHeader>
-    )
-}
+  useEffect(() => {
+    if (path === "/") {
+      setTitle("Reviews");
+    } else if (path.startsWith("/review/")) {
+      setTitle("Review");
+    } else {
+      setTitle("");
+    }
+  }, [path]);
+
+  return (
+    <ResponsiveHeader>
+      <PageTitle
+        isOpen={isOpen}
+      >
+        {title}
+      </PageTitle>
+    </ResponsiveHeader>
+  );
+};
 
 export default Header;
