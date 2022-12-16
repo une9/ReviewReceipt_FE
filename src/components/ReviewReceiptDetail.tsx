@@ -11,7 +11,7 @@ const SepLineDetailText = () => SepLine(" * ");
 
 const DetailScoreSection = (props: ReviewDetail) => {
   return (
-    <ul>
+    <ReRe.Detail.Ul>
       <ReRe.Detail.Row>
         <SepLineList />
         <div className="row-score">
@@ -74,7 +74,7 @@ const DetailScoreSection = (props: ReviewDetail) => {
         </div>
         <SepLineList />
       </ReRe.Detail.Row>
-    </ul>
+    </ReRe.Detail.Ul>
   );
 };
 

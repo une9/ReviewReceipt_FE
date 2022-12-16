@@ -120,7 +120,11 @@ const ReviewReceipt = ({
       </section>
 
       <ReviewReceiptDetailComp {...ReviewDetailProps} />
-      <ReviewReceiptBarcode />
+      <ReviewReceiptBarcode 
+        reviewId={review_id}
+        reviewType={review_type}
+        createDate={create_date}
+      />
 
       <ReRe.Receipt.Footer.Body>
         <div>

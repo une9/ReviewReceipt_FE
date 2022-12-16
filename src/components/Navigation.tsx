@@ -33,7 +33,7 @@ const Navigation = () => {
     if (path === "/") {
       return target === "/";
     } else if (path.startsWith("/review/")) {
-      return target === "/reviews";
+      return target === "/review";
     } else if (path.startsWith("/receipt/")) {
       return target === "/receipts";
     } else if (path === "/my") {
@@ -54,9 +54,9 @@ const Navigation = () => {
             target: "/",
           },
           {
-            name: "Reviews",
+            name: "Review",
             href: "/",
-            target: "/reviews",
+            target: "/review",
           },
           {
             name: "Receipts",

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { COLOR, isMobile, isNarrowScreen, TOGGLEBTN, TOGGLENAV } from './variables'
+import { COLOR, isMobile, isMobileNarrower, isNarrowScreen, TOGGLEBTN, TOGGLENAV, ZINDEX } from './variables'
 
 // mixin
 const moveLeftMixin = css`
@@ -52,13 +52,14 @@ export const ResponsiveHeader = styled.header`
     position: fixed;
     left: 0;
     top: 0;
+
+    z-index: ${ZINDEX.Z1};
 `
 
 export const PageTitle = styled.h1<{isOpen:boolean}>`
     font-family: 'Abril Fatface', cursive;
     font-size: 4rem;
     margin: 1rem 0;
-    z-index: 10;
     // cursor: pointer;
 
     position: relative;
@@ -78,7 +79,7 @@ export const ResponsiveNav = {
         position: fixed;
         top: 0;
         right: 0;
-        z-index: 5;
+        z-index: ${ZINDEX.Z2};
         
         ${isNarrowScreen} {
             right: -${TOGGLENAV.WIDTH};
@@ -125,7 +126,7 @@ export const ResponsiveNav = {
             position: fixed;
             top: 0;
             right: 0;
-            z-index: 10; 
+            z-index: ${ZINDEX.Z3}; 
 
             ${isNarrowScreen} {
                 display: block;
@@ -203,14 +204,6 @@ export const ReviewListSection = styled.section`
     padding: 0 2rem;
     margin: 0 auto;
     max-width: 50rem;
-
-    // ${isNarrowScreen} {
-    //     padding: 0 8rem;
-    // }
-
-    // ${isMobile} {
-    //     padding: 0 2rem;
-    // }
 `
 
 export const ReviewListItem = {
@@ -261,12 +254,25 @@ export const ReviewReceipt = {
             margin-bottom: 1rem;
         `,
         Body: styled.article`
-                width: 28rem;
+                min-width: 20rem;   
+                width: 24rem;
+
+                ${isMobile} {
+                    width: 22rem;   
+                }
+
+                ${isMobileNarrower} {
+                    width: 20rem;   
+                }
+
                 padding: 4rem 2rem 1rem 2rem;
                 background: ${COLOR.BG.RECEIPT};
                 box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     
                 font-family: "ND"; 
+
+                position: relative;
+                z-index: ${ZINDEX.Z1};
 
                 h1 {
                     margin: 0.75rem 0;
@@ -291,11 +297,8 @@ export const ReviewReceipt = {
     },
     Detail: {
         Section: styled.section`
-            width: 24rem;
-
-            ul {
-                padding: 0;
-            }
+            // width: 24rem;
+            width: 100%
 
             .rows {
                 margin: 1rem 0;
@@ -303,8 +306,11 @@ export const ReviewReceipt = {
         `,
         ReviewText: styled.div`
             p {
-                margin: 1rem 0.5rem 2rem 0.5rem;
+                margin: 1rem 0.25rem 2rem 0.25rem;
             }
+        `,
+        Ul: styled.ul`
+            padding: 0;
         `,
         Row: styled.li`
             list-style: none;
@@ -312,10 +318,21 @@ export const ReviewReceipt = {
             .row-score {
                 display: flex;
                 justify-content: space-between;
-        
-                .right > div {
-                    float: left;
-                    margin: 0 1rem;
+
+                .right {
+                    display: flex;
+
+                    & > div {
+                        margin: 0 1rem;
+
+                        ${isMobile} {
+                            margin: 0 0.75rem;
+                        }
+
+                        ${isMobileNarrower} {
+                            margin: 0 0.5rem;
+                        }
+                    }
                 }
         
             }
@@ -339,7 +356,7 @@ export const Barcode = styled.div`
 
     img {
         mix-blend-mode: multiply;
-        width: 60%;
+        width: 70%;
         margin: 0 auto;
     }
 `
