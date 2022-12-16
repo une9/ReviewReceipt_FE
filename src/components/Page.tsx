@@ -1,4 +1,4 @@
-import { Page as PageStyleComp, PageWrapper } from "../emotion/styles";
+import { Page as PageStyleComp, PageInner, PageWrapper } from "../emotion/styles";
 import { useContext } from "react";
 import { NavContext } from "../contexts/NavContext";
 
@@ -9,7 +9,9 @@ const Page = ({ children } : {children: React.ReactNode }) => {
             isOpen={isOpen}
         >
             <PageStyleComp>
-                {children}
+                <PageInner>
+                    {children}
+                </PageInner>
             </PageStyleComp>
         </PageWrapper>
     )

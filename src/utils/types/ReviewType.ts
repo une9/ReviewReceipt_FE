@@ -1,10 +1,11 @@
 // enums
-// export enum ReviewTypeEnum {
-//     MOV = "MOVIE",
-//     DRM = "DRAMA",
-//     BOOK = "BOOK",
-//     SHOW = "SHOW",
-// }
+export const ReviewTypeObj = {
+    MOV: "MOVIE",
+    DRM: "DRAMA",
+    BOOK: "BOOK",
+    SHOW: "SHOW",
+} as const;
+export type ReviewType = keyof typeof ReviewTypeObj;
 
 // export enum ShowTypeEnum {
 
@@ -14,7 +15,7 @@
 export interface Review {
     review_id: number,
     review_title: string,
-    review_type: string,
+    review_type: ReviewType,
     user_id: number,
     abstract_txt: string,
     director: string,

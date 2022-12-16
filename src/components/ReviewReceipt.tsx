@@ -85,11 +85,11 @@ const ReviewReceipt = ({
     <ReRe.Receipt.Body>
       <ReRe.Receipt.Head>[ 리뷰 영수증 ]</ReRe.Receipt.Head>
 
-      <h1>
+      <ReRe.Receipt.Title>
         {review_title && publishYear
           ? `${review_title} (${publishYear})`
           : review_title && review_title}
-      </h1>
+      </ReRe.Receipt.Title>
 
       <section>
         <ReRe.Receipt.Row>

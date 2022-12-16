@@ -78,7 +78,7 @@ export const ResponsiveNav = {
     Body: styled.nav<{isOpen:boolean}>`
         position: fixed;
         top: 0;
-        right: 0;
+        right: 32px;
         z-index: ${ZINDEX.Z2};
         
         ${isNarrowScreen} {
@@ -86,7 +86,7 @@ export const ResponsiveNav = {
 
             transition-duration: 0.5s;
             ${props => props.isOpen && `
-                right: 0;
+                right: 8px;
                 transition-duration: 0.5s;
             `}
         }
@@ -116,16 +116,16 @@ export const ResponsiveNav = {
         padding: 0;
         padding-top: 10rem;
 
-        // position: absolute;
-        // top: 0;
-        // right: 0;
+        ${isNarrowScreen} {
+            padding-top: 6rem;
+        }
     `,
     ToggleBtn: {
         Container: styled.div`
             display: none;
             position: fixed;
             top: 0;
-            right: 0;
+            right: 8px;
             z-index: ${ZINDEX.Z3}; 
 
             ${isNarrowScreen} {
@@ -199,11 +199,45 @@ export const ResponsiveNav = {
     }
 }
 
+export const ReviewWriteBtn = styled.button`
+    width: ${TOGGLEBTN.WIDTH};
+    height: ${TOGGLEBTN.WIDTH};
+
+    position: relative;
+
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:before{
+        position: absolute;
+        width: ${TOGGLEBTN.WIDTH};
+        height: ${TOGGLEBTN.HEIGHT};
+        background-color: ${TOGGLEBTN.COLOR};
+        content: "";
+        top: calc(${TOGGLEBTN.WIDTH} / 2);
+        left: 0;
+    }
+    
+    &:after{
+        position: absolute;
+        width: ${TOGGLEBTN.WIDTH};
+        height: ${TOGGLEBTN.HEIGHT};
+        background-color: ${TOGGLEBTN.COLOR};
+        content: "";
+        top: calc(${TOGGLEBTN.WIDTH} / 2);
+        transform: rotate(0.75turn);
+        left: 0;
+    }
+
+`
+
 // Review List Item
 export const ReviewListSection = styled.section`
     padding: 0 2rem;
     margin: 0 auto;
     max-width: 50rem;
+    width: 100%;
 `
 
 export const ReviewListItem = {
@@ -240,7 +274,7 @@ export const ReviewListItem = {
 }
 
 
-export const ReviewDetailInner = styled.div`
+export const PageInner = styled.div`
     margin-top: 32px;
 
     display: flex;
@@ -274,10 +308,13 @@ export const ReviewReceipt = {
                 position: relative;
                 z-index: ${ZINDEX.Z1};
 
-                h1 {
-                    margin: 0.75rem 0;
-                }
+                // h1 {
+                //     margin: 0.75rem 0;
+                // }
             `,
+        Title: styled.h1`
+            margin: 0.75rem 0;
+        `,
         Section: styled.section``,
         Row: styled.p`
             margin: 0.4rem 0;
@@ -360,3 +397,4 @@ export const Barcode = styled.div`
         margin: 0 auto;
     }
 `
+

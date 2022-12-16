@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Page from "../components/Page";
 import ReviewReceipt from "../components/ReviewReceipt";
-import { ReviewDetailInner } from "../emotion/styles";
 import { ReviewExtend } from "../utils/types/ReviewType";
 
 const ReviewDetail = () => {
@@ -30,14 +29,12 @@ const ReviewDetail = () => {
 
   return (
     <Page>
-      <ReviewDetailInner>
         {review && (
           <div>
             {/* <div>{review['is_public'] ? "공개" : "비공개"}</div> */}
             <ReviewReceipt {...review} />
           </div>
         )}
-      </ReviewDetailInner>
     </Page>
   );
 };

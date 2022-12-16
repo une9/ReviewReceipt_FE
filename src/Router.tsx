@@ -3,6 +3,7 @@ import ReviewDetail from "./pages/ReviewDetail";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MyHeader from "./components/Header";
 import MyNavigation from "./components/Navigation";
+import WriteReview from "./pages/WriteReview";
 
 export default function Router() {
   return (
@@ -13,11 +14,11 @@ export default function Router() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/review/:rvid" element={<ReviewDetail />} />
-        {/* <Route path="home" element={<Home />}/>
+        <Route path="/new" element={<WriteReview />} />
+        {/*
           <Route path="login" element={<Login />}/>
           <Route path="mypage" element={<MyPage />}/>
-          <Route path="planet/:planetId" element={<PlanetDetail />} /> 
-          <Route path="planet/purchase" element={<PlanetPurchase />} />  */}
+          */}
       </Routes>
     </BrowserRouter>
   );

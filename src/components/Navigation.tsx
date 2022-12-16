@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { NavContext } from "../contexts/NavContext";
-import { ResponsiveNav as Nav } from "../emotion/styles";
+import { ResponsiveNav as Nav, ReviewWriteBtn } from "../emotion/styles";
 
 const ToggleBtn = ({
   isOpen,
@@ -26,6 +26,7 @@ const Navigation = () => {
   const loc = useLocation();
   const path = loc.pathname;
   console.log(path);
+  const navigate = useNavigate();
 
   const { isOpen, setIsOpen } = useContext(NavContext);
 
@@ -47,6 +48,11 @@ const Navigation = () => {
       <ToggleBtn isOpen={isOpen} onClick={() => setIsOpen((prev) => !prev)} />
 
       <Nav.ToggleUl>
+        <Nav.Li>
+          <ReviewWriteBtn 
+            onClick={() => navigate("/new")}/>
+
+        </Nav.Li>
         {[
           {
             name: "Home",
