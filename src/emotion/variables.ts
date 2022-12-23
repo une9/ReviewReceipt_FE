@@ -3,6 +3,7 @@ export const COLOR = {
         RECEIPT: '#fafafa',
     },
     FONT: {
+        MAIN: "#000000",
         SUB: '#7d7d7d',
         SUB_LIGHTER: '#969393',
         MINOR: '#b5b5b5'

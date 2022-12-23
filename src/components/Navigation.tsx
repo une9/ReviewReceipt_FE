@@ -39,6 +39,8 @@ const Navigation = () => {
       return target === "/receipts";
     } else if (path === "/my") {
       return target === "/my";
+    } else if (path === "/review/new") {
+      return target === "/review/new";
     }
     return false;
   };
@@ -49,10 +51,11 @@ const Navigation = () => {
 
       <Nav.ToggleUl>
         <Nav.Li>
-          <ReviewWriteBtn 
-            onClick={() => navigate("/new")}/>
-
+            <Nav.A isHere={checkIsHere("/review/new")} onClick={() => navigate("/review/new")}>
+              <ReviewWriteBtn />
+            </Nav.A>
         </Nav.Li>
+
         {[
           {
             name: "Home",
@@ -76,7 +79,7 @@ const Navigation = () => {
           },
         ].map((item, idx) => (
           <Nav.Li key={item.name}>
-            <Nav.A isHere={checkIsHere(item.target)} href={item.href}>
+            <Nav.A isHere={checkIsHere(item.target)} onClick={() => navigate(item.href)}>
               {item.name}
             </Nav.A>
           </Nav.Li>

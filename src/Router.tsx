@@ -13,8 +13,9 @@ export default function Router() {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/review/new" element={<WriteReview />} />
         <Route path="/review/:rvid" element={<ReviewDetail />} />
-        <Route path="/new" element={<WriteReview />} />
+        <Route path="/review/:rvid/edit" element={<WriteReview />} />
         {/*
           <Route path="login" element={<Login />}/>
           <Route path="mypage" element={<MyPage />}/>

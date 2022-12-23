@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import styled from '@emotion/styled'
+import styled from '@emotion/styled/macro'
 import { COLOR, isMobile, isMobileNarrower, isNarrowScreen, TOGGLEBTN, TOGGLENAV, ZINDEX } from './variables'
 
 // mixin
@@ -74,6 +74,55 @@ export const PageTitle = styled.h1<{isOpen:boolean}>`
     }
 `
 
+
+export const ReviewWriteBtn = styled.button`
+    width: ${TOGGLEBTN.WIDTH};
+    height: ${TOGGLEBTN.WIDTH};
+
+    position: relative;
+
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:before{
+        position: absolute;
+        width: ${TOGGLEBTN.WIDTH};
+        height: ${TOGGLEBTN.HEIGHT};
+        background-color: ${TOGGLEBTN.COLOR};
+        content: "";
+        top: calc(${TOGGLEBTN.WIDTH} / 2);
+        right: 0;
+        transition-duration: 0.5s;
+    }
+    
+    &:after{
+        position: absolute;
+        width: ${TOGGLEBTN.WIDTH};
+        height: ${TOGGLEBTN.HEIGHT};
+        background-color: ${TOGGLEBTN.COLOR};
+        content: "";
+        top: calc(${TOGGLEBTN.WIDTH} / 2);
+        transform: rotate(90deg);
+        right: 0;
+        transition-duration: 0.5s;
+    }
+
+    &:hover {
+
+        &:before{
+            transform: rotateZ(90deg);
+            transition-duration: 0.5s;
+        }
+        
+        &:after{
+            transform: rotateZ(180deg);
+            transition-duration: 0.5s;
+        }
+    }
+    
+`
+
 export const ResponsiveNav = {
     Body: styled.nav<{isOpen:boolean}>`
         position: fixed;
@@ -107,7 +156,7 @@ export const ResponsiveNav = {
         text-decoration: none;
         color: ${props => props.isHere ? "transparent" : "black"};
         -webkit-text-stroke: ${props => props.isHere ? "1px black" : "none"};
-        // text-shadow: ${props => props.isHere ? "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;" : "none"};
+        cursor: pointer;
     `,
     ToggleUl: styled.ul`
         width: ${TOGGLENAV.WIDTH};
@@ -171,7 +220,6 @@ export const ResponsiveNav = {
             `}
             
             &:before{
-                // @include icon-before(8px, 60px, -20px);
                 transition-duration: 0.5s;
                 position: absolute;
                 width: ${TOGGLEBTN.WIDTH};
@@ -183,7 +231,6 @@ export const ResponsiveNav = {
             }
             
             &:after{
-                // @include icon-after(8px, 60px, 20px);
                 transition-duration: 0.5s;
                 position: absolute;
                 width: ${TOGGLEBTN.WIDTH};
@@ -193,44 +240,10 @@ export const ResponsiveNav = {
                 top: ${TOGGLEBTN.TOP};
                 left: 0;
             }
-            
         }
      `
     }
 }
-
-export const ReviewWriteBtn = styled.button`
-    width: ${TOGGLEBTN.WIDTH};
-    height: ${TOGGLEBTN.WIDTH};
-
-    position: relative;
-
-    background: transparent;
-    border: none;
-    cursor: pointer;
-
-    &:before{
-        position: absolute;
-        width: ${TOGGLEBTN.WIDTH};
-        height: ${TOGGLEBTN.HEIGHT};
-        background-color: ${TOGGLEBTN.COLOR};
-        content: "";
-        top: calc(${TOGGLEBTN.WIDTH} / 2);
-        left: 0;
-    }
-    
-    &:after{
-        position: absolute;
-        width: ${TOGGLEBTN.WIDTH};
-        height: ${TOGGLEBTN.HEIGHT};
-        background-color: ${TOGGLEBTN.COLOR};
-        content: "";
-        top: calc(${TOGGLEBTN.WIDTH} / 2);
-        transform: rotate(0.75turn);
-        left: 0;
-    }
-
-`
 
 // Review List Item
 export const ReviewListSection = styled.section`
@@ -288,34 +301,33 @@ export const ReviewReceipt = {
             margin-bottom: 1rem;
         `,
         Body: styled.article`
-                min-width: 20rem;   
-                width: 24rem;
+            min-width: 20rem;   
+            width: 24rem;
 
-                ${isMobile} {
-                    width: 22rem;   
-                }
+            ${isMobile} {
+                width: 22rem;   
+            }
 
-                ${isMobileNarrower} {
-                    width: 20rem;   
-                }
+            ${isMobileNarrower} {
+                width: 20rem;   
+            }
 
-                padding: 4rem 2rem 1rem 2rem;
-                background: ${COLOR.BG.RECEIPT};
-                box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    
-                font-family: "ND"; 
+            padding: 4rem 2rem 1rem 2rem;
+            background: ${COLOR.BG.RECEIPT};
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
-                position: relative;
-                z-index: ${ZINDEX.Z1};
+            font-family: "ND"; 
 
-                // h1 {
-                //     margin: 0.75rem 0;
-                // }
-            `,
+            position: relative;
+            z-index: ${ZINDEX.Z1};
+
+            // h1 {
+            //     margin: 0.75rem 0;
+            // }
+        `,
         Title: styled.h1`
             margin: 0.75rem 0;
         `,
-        Section: styled.section``,
         Row: styled.p`
             margin: 0.4rem 0;
         `,
@@ -384,7 +396,65 @@ export const ReviewReceipt = {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: none;
-    `
+    `,
+    Form: {
+        Fieldset: styled.fieldset`
+            border: none;
+        `,
+        Row: styled.p`
+            margin: 0.4rem 0;
+        `,
+        SideBar: {
+            Body: styled.aside`
+                position: relative;
+                left: -20rem;
+                top: 50%;
+                bottom: 50%;
+                
+                font-family: "P";
+            `,
+            Ul: styled.ul`
+                margin: 0;
+                padding: 0;
+            `,
+            Li: styled.li`
+                list-style: none;
+            `,
+            InputWrapper: styled.span`
+                &:first-of-type {
+                    margin-right: 1rem;
+                }
+            `,
+            Input: styled.input`
+                display: none;
+    
+                &:checked+label {       // 선택된 요소의 라벨 스타일
+                    color: ${COLOR.FONT.MAIN};
+                    // font-weight: 800 ;
+                }
+            `,
+            Label: styled.label`
+                cursor: pointer;
+                color: ${COLOR.FONT.SUB};
+                font-family: "ND";
+    
+                i {
+                    margin: 0.25rem;
+                }
+            `,
+            SepLine: styled.div`
+                width: 20rem;
+                height: 1px;
+                background-color: ${COLOR.BORDER.LISTITEM};
+                margin: 1rem 0;
+            `,
+            InputDesc: styled.div`
+                color: ${COLOR.FONT.SUB};
+                font-size: 0.8rem;
+                margin-top: 0.5rem;
+            `
+        }
+    },
 }
 
 export const Barcode = styled.div`
@@ -397,4 +467,3 @@ export const Barcode = styled.div`
         margin: 0 auto;
     }
 `
-

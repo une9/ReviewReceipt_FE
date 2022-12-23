@@ -22,7 +22,6 @@ export interface Review {
     do_date: Date,
     favorite_line: string,
     player: string,
-    publish_year: string,
     publisher: string,
     place: string,
     create_date: Date,
