@@ -404,6 +404,27 @@ export const ReviewReceipt = {
         Row: styled.p`
             margin: 0.4rem 0;
         `,
+        SaveBtnWrapper: styled.div`
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        `,
+        SaveBtn: styled.button`
+            font-family: 'Abril Fatface', cursive;
+            font-size: 3rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+
+            position: relative;
+            transition-duration: 0.3s;
+
+            &:hover {
+                transform: scale(1.1);
+                transition-duration: 0.3s;
+            }
+        `,
         SideBar: {
             Body: styled.aside`
                 position: relative;
@@ -452,6 +473,42 @@ export const ReviewReceipt = {
                 color: ${COLOR.FONT.SUB};
                 font-size: 0.8rem;
                 margin-top: 0.5rem;
+            `,
+            ToggleBtn: styled.button`
+                display: block;
+                cursor: pointer;
+            `
+        },
+        Detail: {
+            Ul: styled.ul`
+                margin: 0;
+                padding: 0;
+            `,
+            Li: styled.li`
+                list-style: none;
+                display: flex;
+                margin-bottom: 1rem;
+
+                input {
+                    margin: 0.25rem;
+                }
+
+                input[type=text] {
+                    width: 12rem;
+                }
+
+                input[type=number] {
+                    width: 4rem;
+                }
+            `,
+            LiElem: styled.div`
+                height: 3rem;
+                line-height: 3rem;
+                margin-right: 1rem;
+            `,
+            ToggleBtn: styled.button`
+                flex-grow: 1;
+                cursor: pointer;
             `
         }
     },

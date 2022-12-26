@@ -1,9 +1,11 @@
+import { DateString } from "../types/DateType";
+
 // utils
 const formatToTwoDigit = (num: number): string => {
     return num < 10 ? `0${num}` : `${num}`;
 }
 
-export const ReviewDateFormatter = (t: Date): string => {
+export const ReviewDateFormatter = (t: Date): DateString => {
     try {
         const time = new Date(t)
     
@@ -14,9 +16,9 @@ export const ReviewDateFormatter = (t: Date): string => {
         const formattedMonth = formatToTwoDigit(month);
         const formattedDate = formatToTwoDigit(date);
         
-        return `${year}-${formattedMonth}-${formattedDate}`;
+        return `${year}-${formattedMonth}-${formattedDate}` as DateString;
     } catch {
-        return t.toString();
+        return t.toString()  as DateString;
     }
 }
 

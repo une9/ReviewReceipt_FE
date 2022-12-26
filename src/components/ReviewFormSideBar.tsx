@@ -1,18 +1,21 @@
 import { ReviewReceipt as ReRe } from "../emotion/styles";
 import { Dispatch, SetStateAction } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { OptionalInputs } from "./ReviewForm";
 
 interface ReviewFormSideBarProps {
-  isPublic: boolean;
-  setIsPublic: Dispatch<SetStateAction<boolean>>;
+  isPublic: boolean,
+  setIsPublic: Dispatch<SetStateAction<boolean>>,
+  isInForm: OptionalInputs,
+  setIsInForm: Dispatch<SetStateAction<OptionalInputs>>
 }
 
 const ReviewFormSideBarSectionIsPublic = ({
   isPublic,
-  setIsPublic,
+  setIsPublic
 }: {
-  isPublic: boolean;
-  setIsPublic: Dispatch<SetStateAction<boolean>>;
+  isPublic: boolean,
+  setIsPublic: Dispatch<SetStateAction<boolean>>,
 }) => {
   const handleIsPublic = () => setIsPublic((prev) => !prev);
 
@@ -65,7 +68,41 @@ const ReviewFormSideBarSectionIsPublic = ({
 const ReviewFormSideBar = ({
   isPublic,
   setIsPublic,
+  isInForm,
+  setIsInForm
 }: ReviewFormSideBarProps) => {
+
+  const optionalToggleIcons: {id: keyof OptionalInputs, icon: null}[] = [
+    {
+      id: "director",
+      icon: null
+    },
+    {
+      id: "favorite_line",
+      icon: null
+    },
+    {
+      id: "player",
+      icon: null
+    },
+    {
+      id: "publisher",
+      icon: null
+    },
+    {
+      id: "publish_date",
+      icon: null
+    },
+    {
+      id: "detail_review_text",
+      icon: null
+    },
+    {
+      id: "review_detail",
+      icon: null
+    },
+  ]
+
   return (
     <ReRe.Form.SideBar.Body>
       <ReRe.Form.SideBar.Ul>
@@ -79,7 +116,22 @@ const ReviewFormSideBar = ({
         <ReRe.Form.SideBar.SepLine />
 
         <ReRe.Form.SideBar.Li>
-
+          {
+            optionalToggleIcons
+            .map((item, i) => (
+              <ReRe.Form.SideBar.ToggleBtn
+                key={item.id}
+                onClick={() => {
+                  const newForm :OptionalInputs = {...isInForm};
+                  Object.assign(newForm, {[item.id]: !isInForm[item.id]});
+                  return setIsInForm(newForm);
+                }}
+              >
+                {item.id}
+              </ReRe.Form.SideBar.ToggleBtn>
+            ))
+          }
+            
         </ReRe.Form.SideBar.Li>
       </ReRe.Form.SideBar.Ul>
     </ReRe.Form.SideBar.Body>

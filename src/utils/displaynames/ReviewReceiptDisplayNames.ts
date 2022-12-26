@@ -27,7 +27,7 @@ export const GenreDisplayName : DisplayName = {
 
 export const publisherDisplayName : DisplayName = {
     "MOV": "배급사",
-    "DRM": "제작사/방송사",
+    "DRM": "방송사",
     "MSC": "소속사",
     "BOOK": "출판사",
     "SHOW": "제작사",

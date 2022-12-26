@@ -1,19 +1,21 @@
 import { ReviewReceipt as ReRe } from "../emotion/styles";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { ReviewDateFormatter } from "../utils/formatters/timeformatter";
+import { ReviewDateFormatter, ReviewTimeFormatter } from "../utils/formatters/timeformatter";
 import { Review, ReviewDetail, ReviewExtend, ReviewType, ReviewTypeObj } from "../utils/types/ReviewType";
 import ReviewFormDetail from "./ReviewFormDetail";
 import { playerDisplayName, publisherDisplayName, publlishDateDisplayName } from "../utils/displaynames/ReviewReceiptDisplayNames";
 import ReviewFormSideBar from "./ReviewFormSideBar";
+import { DateString } from "../utils/types/DateType";
 
 type InputFormValType = string | Date | number | undefined;
 
 interface InputForm {
+    user_id?: number,
     review_type?: string,
-    do_date?: Date,
+    do_date?: DateString,
     review_title?: string,
-    publish_date?: Date,
+    publish_date?: DateString,
     abstract_txt?: string,
     publisher?: string,
     director?: string,
@@ -45,6 +47,64 @@ interface InputForm {
     list_5_desc?: string
 }
 
+export interface OptionalInputs {
+    director: boolean,
+    favorite_line: boolean,
+    player: boolean,
+    publisher: boolean,
+    publish_date: boolean,
+    detail_review_text: boolean,
+    review_detail: boolean
+}
+
+
+// ★★ NEEDS REFACTORING ★★
+
+export type FormDetailItemNum = 1|2|3|4|5;
+// export type FormDetailItemKeyPrefix = `list_${FormDetailItemNum}_${'title'|'score_total'|'score'|'desc'}`
+export type FormDetailItemKeyPrefix = `list_${FormDetailItemNum}`;
+// export type FormDetailItemKeyTitle = `${FormDetailItemKeyPrefix}_title`;
+// export type FormDetailItemKeyScoreTotal = `${FormDetailItemKeyPrefix}_score_total`;
+
+export type FormDetailItem1 = {
+    "list_1_title"?: string;
+    "list_1_score_total"?: number;
+    "list_1_score"?: number;
+    "list_1_desc"?: string,
+}
+export type FormDetailItem2 = {
+    "list_2_title"?: string;
+    "list_2_score_total"?: number;
+    "list_2_score"?: number;
+    "list_2_desc"?: string,
+}
+export type FormDetailItem3 = {
+    "list_3_title"?: string;
+    "list_3_score_total"?: number;
+    "list_3_score"?: number;
+    "list_3_desc"?: string,
+}
+export type FormDetailItem4 = {
+    "list_4_title"?: string;
+    "list_4_score_total"?: number;
+    "list_4_score"?: number;
+    "list_4_desc"?: string,
+}
+export type FormDetailItem5 = {
+    "list_5_title"?: string;
+    "list_5_score_total"?: number;
+    "list_5_score"?: number;
+    "list_5_desc"?: string,
+}
+
+export type FormDetail = {
+    1? : FormDetailItem1; 
+    2? : FormDetailItem1; 
+    3? : FormDetailItem1; 
+    4? : FormDetailItem1; 
+    5? : FormDetailItem1; 
+}
+
 type KeysMatching<T, V> = {[K in keyof T]-?: T[K] extends V ? K : never}[keyof T];
 
 const ReviewForm = () => {
@@ -53,6 +113,16 @@ const ReviewForm = () => {
 
     const [form, setForm] = useState<InputForm>({});
     const [isPublic, setIsPublic] = useState<boolean>(false);
+    const [isInForm, setIsInForm] = useState<OptionalInputs>({
+                                                                director: false,
+                                                                favorite_line: false,
+                                                                player: false,
+                                                                publisher: false,
+                                                                publish_date: false,
+                                                                detail_review_text: true,
+                                                                review_detail: true
+                                                            });
+    const [formDetail, setFormDetail] = useState<FormDetail>({});
 
     useEffect(() => {
         const regex = /^\/review\/[0-9]\/edit/;
@@ -60,6 +130,14 @@ const ReviewForm = () => {
             // axios
             console.log("수정페이지!")
 
+        } else {
+            // 신규 작성 페이지
+            // default values
+            setForm({
+                review_type: "MOV",
+                do_date: ReviewDateFormatter(new Date()),
+                publish_date: ReviewDateFormatter(new Date()),
+            })
         }
     }, [])
 
@@ -68,7 +146,7 @@ const ReviewForm = () => {
         id:keyof InputForm) => {
             // const newForm:{[key: string]: InputFormValType} = {...form};
             const newForm:InputForm = {...form};
-            Object.assign(newForm, {id: e.target.value});
+            Object.assign(newForm, {[id]: e.target.value});
             return setForm(newForm);
     }
 
@@ -82,7 +160,7 @@ const ReviewForm = () => {
 
     // Inputs
     const InputText= (id:KeysMatching<InputForm, string | undefined>, defaultVal?:string) => Input("text", id, defaultVal);
-    const InputDate = (id:KeysMatching<InputForm, Date | undefined>, defaultVal?:string) => Input("date", id, defaultVal);
+    const InputDate = (id:KeysMatching<InputForm, DateString | undefined>, defaultVal?:string) => Input("date", id, defaultVal);
     const InputNumber = (id:KeysMatching<InputForm, number | undefined>, defaultVal?:number) => Input("number", id, defaultVal);
     const TextArea = (
         id: "detail_review_text" | "favorite_line", 
@@ -113,23 +191,55 @@ const ReviewForm = () => {
     const Label = (target:string, name:string) => <label htmlFor={target}>{`${name }▶`}</label>
 
     const FormInputElem = {
-        text: InputText,
-        date: InputDate,
-        number: InputNumber,
-        textarea: TextArea,
+        text: (id:KeysMatching<InputForm, string | undefined>, defaultVal?:string) => Input("text", id, defaultVal),
+        date: (id:KeysMatching<InputForm, DateString | undefined>, defaultVal?:string) => Input("date", id, defaultVal),
+        number: (id:KeysMatching<InputForm, number | undefined>, defaultVal?:string) => Input("number", id, defaultVal),
+        textarea: (
+                    id: "detail_review_text" | "favorite_line", 
+                    defaultVal?: string) => (
+                        <textarea 
+                            defaultValue={defaultVal}
+                            id={id} name={id}
+                            onChange={e => changeHandler(e, id)}
+                        />
+                    ),
     } as const;
 
+
+    // const FormInputElemType = {
+    //     text: String,
+    //     number: Number,
+    //     date: DateString
+    // } as const
+
+    // const InputElem = (t: string) => {
+    //     let elem = null;
+    //     if (t === "text") {
+    //         elem = InputText()
+    //     } else if (t === "number") {
+    //         elem = Number
+    //     } else if (t === "date") {
+    //         elem = DateString
+    //     }
+
+
+    //     return (
+    //         (id:KeysMatching<InputForm, FormInputElemType[t] | undefined>, defaultVal?:FormInputElemType[t]) => Input(t, id, defaultVal)
+    //     )
+    // }
+
+    // (id:KeysMatching<InputForm, number | undefined>, defaultVal?:number) => Input("number", id, defaultVal);
     // const FormRowInput = (
-    //         type: keyof typeof FormInputElem, 
+    //         type: string, 
     //         id: keyof InputForm, 
     //         name: string, 
     //         defaultVal?: string,
     //         target?: Object) => {
-
+    //             console.log(id, InputElem(type))
     //     return (
     //         <ReRe.Form.Row>
     //             {Label(id, name)}
-    //             {FormInputElem[type](id, defaultVal)}
+    //             {/* {FormInputElem[type](id, defaultVal)} */}
     //         </ReRe.Form.Row>
     //     )
     // }
@@ -152,7 +262,14 @@ const ReviewForm = () => {
     // handler
     const handleSubmit : React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
-        console.log(form)
+        const customForm = {...form};
+
+        // 추가 정보
+        customForm["is_public"] = isPublic;
+        customForm["user_id"] = 5;
+
+        console.log(customForm)
+        // axios - insert
     }
 
 
@@ -161,6 +278,8 @@ const ReviewForm = () => {
             <ReviewFormSideBar
                 isPublic={isPublic}
                 setIsPublic={setIsPublic}
+                isInForm={isInForm}
+                setIsInForm={setIsInForm}
             />
 
             <form onSubmit={handleSubmit}>
@@ -191,33 +310,49 @@ const ReviewForm = () => {
 
                     </ReRe.Form.Fieldset>
                     <ReRe.Form.Fieldset>
-                        <ReRe.Form.Row>
-                            {Label("player", 
-                                "review_type" in form
-                                ?
-                                    playerDisplayName[
-                                        form["review_type"] as keyof typeof playerDisplayName
-                                    ]
-                                : "출연자"
-                            )}
-                            {InputText("player")}
-                        </ReRe.Form.Row>
-                        <ReRe.Form.Row>
-                            {Label("director", "감독")}
-                            {InputText("director")}
-                        </ReRe.Form.Row>
-                        <ReRe.Form.Row>
-                            {Label("publisher", publisherDisplayName[
-                                                    form["review_type"] as keyof typeof playerDisplayName
-                                                ])}
-                            {InputText("publisher")}
-                        </ReRe.Form.Row>
-                        <ReRe.Form.Row>
-                            {Label("publish_date", publlishDateDisplayName[
+                        {
+                            isInForm["player"]
+                            &&
+                            <ReRe.Form.Row>
+                                {Label("player", 
+                                    "review_type" in form
+                                    ?
+                                        playerDisplayName[
+                                            form["review_type"] as keyof typeof playerDisplayName
+                                        ]
+                                    : "출연자"
+                                )}
+                                {InputText("player")}
+                            </ReRe.Form.Row>
+                        }
+                        {
+                            isInForm["director"]
+                            &&
+                            <ReRe.Form.Row>
+                                {Label("director", "감독")}
+                                {InputText("director")}
+                            </ReRe.Form.Row>
+                        }
+                        {
+                            isInForm["publisher"]
+                            &&
+                            <ReRe.Form.Row>
+                                {Label("publisher", publisherDisplayName[
                                                         form["review_type"] as keyof typeof playerDisplayName
                                                     ])}
-                            {InputDate("publish_date", ReviewDateFormatter(new Date()))}
-                        </ReRe.Form.Row>
+                                {InputText("publisher")}
+                            </ReRe.Form.Row>
+                        }
+                        {
+                            isInForm["publish_date"]
+                            &&
+                            <ReRe.Form.Row>
+                                {Label("publish_date", publlishDateDisplayName[
+                                                            form["review_type"] as keyof typeof playerDisplayName
+                                                        ])}
+                                {InputDate("publish_date", ReviewDateFormatter(new Date()))}
+                            </ReRe.Form.Row>
+                        }
                         {
                             form["review_type"] === ReviewTypeObj.SHOW
                             &&
@@ -233,23 +368,43 @@ const ReviewForm = () => {
                             </>
                         }
                     </ReRe.Form.Fieldset>
+
+                    {
+                        isInForm["review_detail"]
+                        &&
+                        <ReRe.Form.Fieldset>
+                            <ReviewFormDetail 
+                                formDetail={formDetail}
+                                setFormDetail={setFormDetail}
+                            />
+                        </ReRe.Form.Fieldset>
+                    }
+
                     <ReRe.Form.Fieldset>
-                        <ReviewFormDetail />
-                    </ReRe.Form.Fieldset>
-                    <ReRe.Form.Fieldset>
-                        <ReRe.Form.Row>
-                            {Label("favorite_line", "인용")}
-                            {TextArea("favorite_line")}
-                        </ReRe.Form.Row>
-                        <ReRe.Form.Row>
-                            {Label("detail_review_text", "내용")}
-                            {TextArea("detail_review_text")}
-                        </ReRe.Form.Row>
+                        {
+                            isInForm["favorite_line"]
+                            &&
+                            <ReRe.Form.Row>
+                                {Label("favorite_line", "인용")}
+                                {TextArea("favorite_line")}
+                            </ReRe.Form.Row>
+                        }
+                        {
+                            isInForm["detail_review_text"]
+                            &&
+                            <ReRe.Form.Row>
+                                {Label("detail_review_text", "내용")}
+                                {TextArea("detail_review_text")}
+                            </ReRe.Form.Row>
+                        }
                     </ReRe.Form.Fieldset>
                 </ReRe.Receipt.Body>
-                <button>
-                    작성
-                </button>
+                
+                <ReRe.Form.SaveBtnWrapper>
+                    <ReRe.Form.SaveBtn>
+                        save
+                    </ReRe.Form.SaveBtn>
+                </ReRe.Form.SaveBtnWrapper>
             </form>
         </div>
     )
