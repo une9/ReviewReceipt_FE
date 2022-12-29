@@ -66,46 +66,58 @@ export type FormDetailItemKeyPrefix = `list_${FormDetailItemNum}`;
 // export type FormDetailItemKeyTitle = `${FormDetailItemKeyPrefix}_title`;
 // export type FormDetailItemKeyScoreTotal = `${FormDetailItemKeyPrefix}_score_total`;
 
-export type FormDetailItem1 = {
-    "list_1_title"?: string;
-    "list_1_score_total"?: number;
-    "list_1_score"?: number;
-    "list_1_desc"?: string,
-}
-export type FormDetailItem2 = {
-    "list_2_title"?: string;
-    "list_2_score_total"?: number;
-    "list_2_score"?: number;
-    "list_2_desc"?: string,
-}
-export type FormDetailItem3 = {
-    "list_3_title"?: string;
-    "list_3_score_total"?: number;
-    "list_3_score"?: number;
-    "list_3_desc"?: string,
-}
-export type FormDetailItem4 = {
-    "list_4_title"?: string;
-    "list_4_score_total"?: number;
-    "list_4_score"?: number;
-    "list_4_desc"?: string,
-}
-export type FormDetailItem5 = {
-    "list_5_title"?: string;
-    "list_5_score_total"?: number;
-    "list_5_score"?: number;
-    "list_5_desc"?: string,
+// export type FormDetailItem1 = {
+//     "list_1_title"?: string;
+//     "list_1_score_total"?: number;
+//     "list_1_score"?: number;
+//     "list_1_desc"?: string,
+// }
+// export type FormDetailItem2 = {
+//     "list_2_title"?: string;
+//     "list_2_score_total"?: number;
+//     "list_2_score"?: number;
+//     "list_2_desc"?: string,
+// }
+// export type FormDetailItem3 = {
+//     "list_3_title"?: string;
+//     "list_3_score_total"?: number;
+//     "list_3_score"?: number;
+//     "list_3_desc"?: string,
+// }
+// export type FormDetailItem4 = {
+//     "list_4_title"?: string;
+//     "list_4_score_total"?: number;
+//     "list_4_score"?: number;
+//     "list_4_desc"?: string,
+// }
+// export type FormDetailItem5 = {
+//     "list_5_title"?: string;
+//     "list_5_score_total"?: number;
+//     "list_5_score"?: number;
+//     "list_5_desc"?: string,
+// }
+
+// export type FormDetail = {
+//     1? : FormDetailItem1; 
+//     2? : FormDetailItem2; 
+//     3? : FormDetailItem3; 
+//     4? : FormDetailItem4; 
+//     5? : FormDetailItem5; 
+// }
+
+export type FormDetailItem = {
+    "id": string;
+    "title"?: string;
+    "score_total"?: string;
+    "score"?: string;
+    "desc"?: string;
 }
 
-export type FormDetail = {
-    1? : FormDetailItem1; 
-    2? : FormDetailItem1; 
-    3? : FormDetailItem1; 
-    4? : FormDetailItem1; 
-    5? : FormDetailItem1; 
-}
+export type KeysMatching<T, V> = {[K in keyof T]-?: T[K] extends V ? K : never}[keyof T];
 
-type KeysMatching<T, V> = {[K in keyof T]-?: T[K] extends V ? K : never}[keyof T];
+export const createNewFormDetailItem = () => {
+    return {id: new Date().getTime().toString() }
+}
 
 const ReviewForm = () => {
     const loc = useLocation();
@@ -122,7 +134,7 @@ const ReviewForm = () => {
                                                                 detail_review_text: true,
                                                                 review_detail: true
                                                             });
-    const [formDetail, setFormDetail] = useState<FormDetail>({});
+    const [formDetail, setFormDetail] = useState<FormDetailItem[]>([createNewFormDetailItem()]);
 
     useEffect(() => {
         const regex = /^\/review\/[0-9]\/edit/;
@@ -268,7 +280,7 @@ const ReviewForm = () => {
         customForm["is_public"] = isPublic;
         customForm["user_id"] = 5;
 
-        console.log(customForm)
+        console.log(customForm, formDetail)
         // axios - insert
     }
 
@@ -299,6 +311,20 @@ const ReviewForm = () => {
                         </ReRe.Form.Row> */}
                         {FormRowSelect("review_type", "리뷰 타입", ReviewTypeObj, "MOV")}
 
+                        {
+                            form["review_type"] === ReviewTypeObj.SHOW
+                            &&
+                            <>
+                                <ReRe.Form.Row>
+                                    {Label("show_type", "공연 유형")}
+                                    {InputText("show_type")}
+                                </ReRe.Form.Row>
+                                <ReRe.Form.Row>
+                                    {Label("place", "장소")}
+                                    {InputText("place")}
+                                </ReRe.Form.Row>
+                            </>
+                        }
                         <ReRe.Form.Row>
                             {Label("do_date", "감상일자")}
                             {InputDate("do_date", ReviewDateFormatter(new Date()))}
@@ -352,20 +378,6 @@ const ReviewForm = () => {
                                                         ])}
                                 {InputDate("publish_date", ReviewDateFormatter(new Date()))}
                             </ReRe.Form.Row>
-                        }
-                        {
-                            form["review_type"] === ReviewTypeObj.SHOW
-                            &&
-                            <>
-                                <ReRe.Form.Row>
-                                    {Label("place", "장소")}
-                                    {InputText("place")}
-                                </ReRe.Form.Row>
-                                <ReRe.Form.Row>
-                                    {Label("show_type", "공연 유형")}
-                                    {InputText("show_type")}
-                                </ReRe.Form.Row>
-                            </>
                         }
                     </ReRe.Form.Fieldset>
 

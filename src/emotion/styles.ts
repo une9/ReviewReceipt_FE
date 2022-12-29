@@ -509,6 +509,19 @@ export const ReviewReceipt = {
             ToggleBtn: styled.button`
                 flex-grow: 1;
                 cursor: pointer;
+            `,
+            AddBtn: styled.button<{detailLen : number}>`
+                z-index: ${ZINDEX.Z2};
+                position: relative;
+                
+                display: ${props => props.detailLen <= 5 ? "block" : "none"};
+            `,
+            AddBtnBackdrop: styled.div`
+                z-index: ${ZINDEX.Z1};
+                background: white;
+                // opacity: 0.2;
+                width: 100%;
+                height: 100%;
             `
         }
     },
