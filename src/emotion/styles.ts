@@ -328,7 +328,7 @@ export const ReviewReceipt = {
         Title: styled.h1`
             margin: 0.75rem 0;
         `,
-        Row: styled.p`
+        Row: styled.div`
             margin: 0.4rem 0;
         `,
         Footer: {
@@ -342,7 +342,17 @@ export const ReviewReceipt = {
             Row: styled.div`
                 margin: 0.25rem 0;
             `
-        }
+        },
+        Citation: styled.div`
+            text-align: center;
+            margin: 1rem 0;
+
+            cite {
+                margin: 2rem 0;
+                display: block;
+                white-space: pre-wrap;  // 줄바꿈
+            }
+        `
     },
     Detail: {
         Section: styled.section`
@@ -363,6 +373,7 @@ export const ReviewReceipt = {
         `,
         Row: styled.li`
             list-style: none;
+            margin: 0.5rem 0;
         
             .row-score {
                 display: flex;
@@ -388,6 +399,10 @@ export const ReviewReceipt = {
         
             .row-desc:before {
                 content: "ㄴ ";
+            }
+
+            .row-desc {
+                margin-top: 0.125rem;
             }
         `
     },

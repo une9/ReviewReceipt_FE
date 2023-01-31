@@ -100,10 +100,11 @@ const ReviewFormDetail = ({
                             </div>
                         </div>
                         <ReRe.Form.Detail.ToggleBtn
-                            onClick={() => {
+                            onClick={(e) => {
                                 // const nxtFormDetail = [...formDetail];
                                 // nxtFormDetail.splice(num, 1);
                                 // setFormDetail(nxtFormDetail);
+                                e.preventDefault();
                                 console.log("delete idx: ", idx+1)
                                 setFormDetail(prev => prev.filter((item, i) => i !== idx))
                             }}
@@ -118,7 +119,10 @@ const ReviewFormDetail = ({
                 &&
                 <div>
                     <ReRe.Form.Detail.AddBtn
-                        onClick={() => setFormDetail(prev => [...prev, createNewFormDetailItem()])}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            setFormDetail(prev => [...prev, createNewFormDetailItem()])
+                        }}
                         detailLen={formDetail.length}
                     >
                         +

@@ -64,7 +64,7 @@ export const ReviewTimeFormatter = (t: Date): string => {
 }
 
 export const getYearFormatter = (t: Date) :string | null => {
-    if (t === undefined) return null;
+    if (t === undefined || t === null) return null;
 
     const time = new Date(t);
     const year = time.getFullYear().toString();

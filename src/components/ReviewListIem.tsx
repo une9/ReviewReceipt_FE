@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import {
   getYearFormatter,
   ReviewShortDateFormatter,
-} from "../utils/formatters/timeformatter";
+} from "../utils/formatters/timeFormatters";
 import { Review } from "../utils/types/ReviewType";
 import { ReviewListItem as ReLiItem } from "../emotion/styles";
 
@@ -47,7 +47,7 @@ const ReviewListItem = ({
     >
       <ReLiItem.Date>{ReviewShortDateFormatter(do_date)}</ReLiItem.Date>
       <ReLiItem.Title>
-        {review_title} ({publishYear})
+        {review_title} {publishYear && `(${publishYear})`}
       </ReLiItem.Title>
       <ReLiItem.Abstract>{abstract_txt}</ReLiItem.Abstract>
     </ReLiItem.Body>

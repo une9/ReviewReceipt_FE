@@ -2,7 +2,7 @@ import {
   getYearFormatter,
   ReviewDateFormatter,
   ReviewTimeFormatter,
-} from "../utils/formatters/timeformatter";
+} from "../utils/formatters/timeFormatters";
 import { ReviewDetail, ReviewExtend } from "../utils/types/ReviewType";
 import { ReviewReceipt as ReRe } from "../emotion/styles";
 import ReviewReceiptDetailComp from "./ReviewReceiptDetail";
@@ -104,7 +104,7 @@ const ReviewReceipt = ({
           {abstract_txt && `한줄요약: ${abstract_txt}`}
         </ReRe.Receipt.Row>
         <ReRe.Receipt.Row>
-          {`${playerDisplayName[review_type]}: ${player}`}
+          {player && `${playerDisplayName[review_type]}: ${player}`}
         </ReRe.Receipt.Row>
         <ReRe.Receipt.Row>{director && `감독: ${director}`}</ReRe.Receipt.Row>
         <ReRe.Receipt.Row>
@@ -117,10 +117,19 @@ const ReviewReceipt = ({
               publish_date
             )}`}
         </ReRe.Receipt.Row>
+        <ReRe.Receipt.Row>
+          {favorite_line && (
+            <ReRe.Receipt.Citation>
+              {<div>"</div>}
+              {<cite>{favorite_line}</cite>}
+              {<div>"</div>}
+            </ReRe.Receipt.Citation>
+          )}
+        </ReRe.Receipt.Row>
       </section>
 
       <ReviewReceiptDetailComp {...ReviewDetailProps} />
-      <ReviewReceiptBarcode 
+      <ReviewReceiptBarcode
         reviewId={review_id}
         reviewType={review_type}
         createDate={create_date}

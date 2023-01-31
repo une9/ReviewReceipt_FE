@@ -1,5 +1,5 @@
 import { ReviewReceipt as ReRe } from "../emotion/styles";
-import { scoreformatter } from "../utils/formatters/scoreformatter";
+import { scoreformatter } from "../utils/formatters/scoreFormatters";
 import { ReviewDetail } from "../utils/types/ReviewType";
 
 const SepLine = (sep: string) => {
@@ -17,8 +17,8 @@ const DetailScoreSection = (props: ReviewDetail) => {
         <div className="row-score">
           <div className="left">부문</div>
           <div className="right">
-            <div>배점</div>
             <div>점수</div>
+            <div>배점</div>
           </div>
         </div>
         <SepLineList />
@@ -38,8 +38,8 @@ const DetailScoreSection = (props: ReviewDetail) => {
               <div className="row-score">
                 <div className="left">{title as string}</div>
                 <div className="right">
-                  <div>{scoreformatter(scoreTotal as number)}</div>
                   <div>{scoreformatter(score as number)}</div>
+                  <div>{scoreformatter(scoreTotal as number)}</div>
                 </div>
               </div>
               {desc && <div className="row-desc">{desc as string}</div>}
@@ -54,20 +54,21 @@ const DetailScoreSection = (props: ReviewDetail) => {
           <div className="right">
             <div>
               {scoreformatter(
-                props.list_1_score_total +
-                  props.list_2_score_total +
-                  props.list_3_score_total +
-                  props.list_4_score_total +
-                  props.list_5_score_total
-              )}
-            </div>
-            <div>
-              {scoreformatter(
                 props.list_1_score +
                   props.list_2_score +
                   props.list_3_score +
                   props.list_4_score +
                   props.list_5_score
+              )}
+            </div>
+            /
+            <div>
+              {scoreformatter(
+                props.list_1_score_total +
+                  props.list_2_score_total +
+                  props.list_3_score_total +
+                  props.list_4_score_total +
+                  props.list_5_score_total
               )}
             </div>
           </div>
