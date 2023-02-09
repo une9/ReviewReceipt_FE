@@ -12,49 +12,100 @@ import {
   publlishDateDisplayName,
 } from "../utils/displaynames/ReviewReceiptDisplayNames";
 import ReviewReceiptBarcode from "./ReviewReceiptBarcode";
+import { ForwardedRef, forwardRef } from "react";
 
-const ReviewReceipt = ({
-  review_id,
-  review_title,
-  review_type,
-  user_id,
-  abstract_txt,
-  director,
-  do_date,
-  favorite_line,
-  player,
-  publisher,
-  place,
-  create_date,
-  modify_date,
-  publish_date,
-  review_detail_id,
-  show_type,
-  is_public,
-  status,
-  yes_detail,
-  detail_review_text,
-  list_1_title,
-  list_1_score_total,
-  list_1_score,
-  list_1_desc,
-  list_2_title,
-  list_2_score_total,
-  list_2_score,
-  list_2_desc,
-  list_3_title,
-  list_3_score_total,
-  list_3_score,
-  list_3_desc,
-  list_4_title,
-  list_4_score_total,
-  list_4_score,
-  list_4_desc,
-  list_5_title,
-  list_5_score_total,
-  list_5_score,
-  list_5_desc,
-}: ReviewExtend) => {
+
+interface ReviewReceiptProp {
+  myRef: React.RefObject<HTMLInputElement>,
+  review: ReviewExtend
+}
+
+// review_id,
+// review_title,
+// review_type,
+// user_id,
+// abstract_txt,
+// director,
+// do_date,
+// favorite_line,
+// player,
+// publisher,
+// place,
+// create_date,
+// modify_date,
+// publish_date,
+// review_detail_id,
+// show_type,
+// is_public,
+// status,
+// yes_detail,
+// detail_review_text,
+// list_1_title,
+// list_1_score_total,
+// list_1_score,
+// list_1_desc,
+// list_2_title,
+// list_2_score_total,
+// list_2_score,
+// list_2_desc,
+// list_3_title,
+// list_3_score_total,
+// list_3_score,
+// list_3_desc,
+// list_4_title,
+// list_4_score_total,
+// list_4_score,
+// list_4_desc,
+// list_5_title,
+// list_5_score_total,
+// list_5_score,
+// list_5_desc
+
+const ReviewReceipt = forwardRef<any, React.RefObject<HTMLInputElement>>((props, ref) => {
+  console.log(props, props[props])
+  const {
+    review_id,
+    review_title,
+    review_type,
+    user_id,
+    abstract_txt,
+    director,
+    do_date,
+    favorite_line,
+    player,
+    publisher,
+    place,
+    create_date,
+    modify_date,
+    publish_date,
+    review_detail_id,
+    show_type,
+    is_public,
+    status,
+    yes_detail,
+    detail_review_text,
+    list_1_title,
+    list_1_score_total,
+    list_1_score,
+    list_1_desc,
+    list_2_title,
+    list_2_score_total,
+    list_2_score,
+    list_2_desc,
+    list_3_title,
+    list_3_score_total,
+    list_3_score,
+    list_3_desc,
+    list_4_title,
+    list_4_score_total,
+    list_4_score,
+    list_4_desc,
+    list_5_title,
+    list_5_score_total,
+    list_5_score,
+    list_5_desc
+  } = props[props];
+
   const ReviewDetailProps: ReviewDetail = {
     detail_review_text,
     list_1_title,
@@ -82,7 +133,7 @@ const ReviewReceipt = ({
   const publishYear = getYearFormatter(publish_date);
 
   return (
-    <ReRe.Receipt.Body>
+    <ReRe.Receipt.Body ref={ref}>
       <ReRe.Receipt.Head>[ 리뷰 영수증 ]</ReRe.Receipt.Head>
 
       <ReRe.Receipt.Title>
@@ -147,6 +198,15 @@ const ReviewReceipt = ({
       </ReRe.Receipt.Footer.Body>
     </ReRe.Receipt.Body>
   );
-};
+});
 
 export default ReviewReceipt;
+// export default ReviewReceipt;
+
+// export const ForwardedRefReviewReceipt = forwardRef((props, ref) => {
+//   return (
+//     <ReviewReceipt 
+//       myRef={ref}
+//       review={props} />
+//   )
+// });
