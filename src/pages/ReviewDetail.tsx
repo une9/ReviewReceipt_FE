@@ -2,11 +2,15 @@ import axios from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Page from "../components/Page";
-import ReviewReceipt from "../components/ReviewReceipt";
+import ReviewReceipt, { ForwardedReviewReceipt } from "../components/ReviewReceipt";
 import { ReviewExtend } from "../utils/types/ReviewType";
-// import { saveAsPng } from 'save-html-as-image';
-const saveHtmlAsImage = require('save-html-as-image');
-const { saveAsPng } = saveHtmlAsImage;
+
+import { toPng } from 'html-to-image';
+import download from 'downloadjs';
+// const saveHtmlAsImage = require('save-html-as-image');
+// const { saveAsPng } = saveHtmlAsImage;
+
+
 
 const ReviewDetail = () => {
   const params = useParams();
@@ -23,7 +27,7 @@ const ReviewDetail = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [review]);
+  }, [review, rvid]);
 
   useEffect(() => {
     fetchReview();
@@ -33,8 +37,16 @@ const ReviewDetail = () => {
   const receiptRef = useRef<HTMLInputElement>(null);
 
   const onPrintReceipt = () => {
-    console.log(receiptRef)
-    saveAsPng(receiptRef);
+    console.log(receiptRef.current)
+    const receiptElem = receiptRef.current;
+    if (receiptElem != null) {
+      // saveAsPng(receiptElem);
+      toPng(receiptElem)
+      .then(function (dataUrl) {
+        download(dataUrl, 'my-node.png');
+      });
+
+    }
   }
 
   return (
@@ -46,8 +58,9 @@ const ReviewDetail = () => {
               ref={receiptRef}
               review={review} /> */}
 
-            <ReviewReceipt
-              props={review}
+            <ForwardedReviewReceipt
+              review={review}
+              receiptRef={receiptRef}
               ref={receiptRef} />
 
               <button
