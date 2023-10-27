@@ -1,5 +1,6 @@
 import { Barcode } from "../emotion/styles";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import JsBarcode from 'jsbarcode'
 
 interface ReviewReceiptBarcodeProps {
   reviewId: number,
@@ -12,29 +13,33 @@ const ReviewReceiptBarcode = ({
   reviewType,
   createDate
 }: ReviewReceiptBarcodeProps) => {
-  // SRC: https://barcode.tec-it.com/
+  const [imageUrl, setImageUrl] = useState<string>()
 
   const timestamp = new Date(createDate).getTime() / 1000;
-  const data = `${reviewId}-${reviewType}-${timestamp}`
+  const barcodeNum = `${reviewId}${reviewType}${timestamp}`
 
-  // useEffect(() => {
-  //   const receiptBarcodeSrc = `https://barcode.tec-it.com/barcode.ashx?data=${data}&code=&translate-esc=true`
-  //   const options = {
-  //     headers: {
-  //       'Access-Control-Allow-Origin': '*'
-  //     }
-  //   }
-  // }, [])
+  useEffect(() => {
+    const canvas = document.createElement('canvas')
+    JsBarcode(
+      canvas, 
+      barcodeNum, 
+      { height: 60, 
+        font: 'ND'}
+    )
+    setImageUrl(canvas.toDataURL('image/png'))
+  }, [])
 
 
   return (
     <Barcode>
-      {/* insert your custom barcode setting your data in the GET parameter "data" */}
-      <img
-        alt="Barcode Generator TEC-IT"
-        src={`https://barcode.tec-it.com/barcode.ashx?data=${data}&code=&translate-esc=true`}
-        crossOrigin="anonymous"
-      />
+      {
+        imageUrl &&
+        <img
+            src={imageUrl}
+            alt={barcodeNum}
+            crossOrigin="anonymous"
+        />
+      }
     </Barcode>
   );
 };
